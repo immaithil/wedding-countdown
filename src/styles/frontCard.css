@@ -1,0 +1,119 @@
+/* 🎴 FRONT CARD BASE */
+.card-front {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    135deg,
+    #092f36,
+    #0f4c5c
+  );
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+/* subtle texture */
+.card-front::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    rgba(255,255,255,0.05) 1px,
+    transparent 1px
+  );
+
+  background-size: 4px 4px;
+  opacity: 0.2;
+}
+
+/* shine effect */
+.card-front::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.2),
+    transparent
+  );
+
+  animation: shine 4s infinite;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  100% { left: 150%; }
+}
+
+/* inner content */
+.front-inner {
+  position: relative;
+  text-align: center;
+  color: #fff6ef;
+  z-index: 2;
+}
+
+/* ganesha */
+.ganesha-front {
+  width: 70px;
+  margin-bottom: 20px;
+
+  filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+}
+
+/* title */
+.invite-title {
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: #ff8fa3;
+}
+
+/* divider */
+.divider {
+  width: 80px;
+  height: 1px;
+  margin: 15px auto;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    #ff8fa3,
+    transparent
+  );
+}
+
+/* names */
+.invite-names {
+  font-family: 'Great Vibes', cursive;
+  font-size: 48px;
+  margin-top: 10px;
+}
+
+/* tap text */
+.tap-text {
+  margin-top: 20px;
+  font-size: 13px;
+  opacity: 0.6;
+  letter-spacing: 1px;
+}
+
+/* subtle breathing */
+.front-inner {
+  animation: frontBreath 3s ease-in-out infinite;
+}
+
+@keyframes frontBreath {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}

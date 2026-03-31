@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from "react";
+import "./App.css";
+import FlipCard from "./components/FlipCard";
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [audioEnabled, setAudioEnabled] = useState(false);
+
+  const tickAudioRef = useRef(null);
+
+  const handleClick = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+      setAudioEnabled(true); // 🔊 start sound on first click
+    } else {
+      setAudioEnabled((prev) => !prev); // 🔁 toggle
+    }
+
+    // 🔥 unlock audio
+    if (tickAudioRef.current) {
+      tickAudioRef.current.play().then(() => {
+        tickAudioRef.current.pause();
+        tickAudioRef.current.currentTime = 0;
+      }).catch(() => {});
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div onClick={handleClick}>
+      <FlipCard
+        isOpen={isOpen}
+        tickAudioRef={tickAudioRef}
+        audioEnabled={audioEnabled}
+      />
     </div>
   );
 }

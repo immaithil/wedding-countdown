@@ -1,0 +1,99 @@
+
+
+/* 🌸 base container */
+.petals {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* 🎥 depth layers */
+.petals.back {
+  z-index: 1;
+}
+
+.petals.front {
+  z-index: 4;
+}
+
+/* 🌸 petal design */
+.petals span {
+  position: absolute;
+  top: -10px;
+
+  width: 14px;
+  height: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #ff8fa3,
+    #ff4d6d
+  );
+
+  border-radius: 60% 60% 60% 60% / 70% 70% 40% 40%;
+
+  opacity: 0.9;
+
+  animation: petalFall linear infinite;
+}
+
+/* 💡 light reflection layer */
+.petals span::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 3px;
+
+  width: 50%;
+  height: 40%;
+
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+
+  filter: blur(1px);
+  opacity: 0.7;
+}
+
+/* 🎥 background petals (blurred depth) */
+.petals.back span {
+  filter: blur(2px);
+  opacity: 0.4;
+}
+
+/* 🎥 foreground petals (sharp + glow) */
+.petals.front span {
+  filter: blur(0.2px);
+
+  box-shadow:
+    0 0 8px rgba(255, 77, 109, 0.4),
+    0 0 12px rgba(255, 143, 163, 0.3);
+}
+
+/* 🌸 realistic falling */
+@keyframes petalFall {
+  0% {
+    transform: translateX(0px) translateY(-10vh) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  25% {
+    transform: translateX(20px) translateY(25vh) rotate(90deg);
+  }
+
+  50% {
+    transform: translateX(-25px) translateY(50vh) rotate(180deg);
+  }
+
+  75% {
+    transform: translateX(15px) translateY(75vh) rotate(270deg);
+  }
+
+  100% {
+    transform: translateX(-10px) translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
