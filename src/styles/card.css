@@ -334,6 +334,13 @@
 /* 🎬 cinematic entry */
 .card-wrapper.flipped .card-back {
   animation: cinematicReveal 1.5s ease forwards;
+  pointer-events: auto;
+}
+.card-wrapper:not(.flipped) .card-back {
+    pointer-events: none;
+}
+.card-wrapper.flipped .card-front {
+    pointer-events: none;
 }
 
 @keyframes cinematicReveal {
@@ -348,5 +355,45 @@
   100% {
     transform: rotateY(180deg) scale(1);
   }
+}
+
+.seconds {
+  display: inline-block;
+  transform-origin: center;
+  perspective: 200px;
+}
+
+.action-buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  z-index: 999;
+}
+
+.action-buttons button {
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: none;
+
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+
+  color: #0f4c5c;
+  font-weight: 600;
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.1),
+    inset 0 0 10px rgba(255,255,255,0.3);
+
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+/* hover */
+.action-buttons button:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.3);
 }
 

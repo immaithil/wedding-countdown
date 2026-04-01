@@ -1,0 +1,134 @@
+/* --- UPLOAD PAGE CONTAINER --- */
+.upload-container {
+  /* Same Teal to Pink Gradient */
+  background: linear-gradient(135deg, #20b2aa, #ffb6c1);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centers the card perfectly on the screen */
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* --- THE MAIN UPLOAD GLASS CARD --- */
+.upload-glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem; /* Spaces out all the inputs evenly */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.upload-glass-card h2 {
+  color: white;
+  margin: 0 0 1rem 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  font-size: 2rem;
+}
+
+/* --- GLASS FILE INPUT --- */
+.glass-file-input {
+  color: white;
+  width: 100%;
+  max-width: 320px;
+  font-size: 0.9rem;
+}
+
+/* This targets the actual "Choose File" button inside the input */
+.glass-file-input::file-selector-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  margin-right: 15px;
+  margin-top: 1rem;
+}
+
+.glass-file-input::file-selector-button:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* --- GLASS TEXT INPUT --- */
+.glass-text-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 1rem 1.5rem;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 320px;
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.glass-text-input::placeholder {
+  color: rgba(255, 255, 255, 0.7); /* Slightly faded white for placeholder */
+}
+
+.glass-text-input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* --- STYLISH GLASS SUBMIT BUTTON --- */
+.glass-submit-btn {
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  padding: 0.8rem 3rem;
+  border-radius: 25px; /* Pill shape */
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 2px 2px rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.glass-submit-btn:hover {
+  background: rgba(255, 255, 255, 0.45);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.8);
+}
+
+.glass-submit-btn:active {
+  transform: translateY(1px) scale(0.98); /* Satisfying press effect */
+}
+
+/* --- UPLOAD STATUS MESSAGE --- */
+.glass-status {
+  color: white;
+  background: rgba(0, 0, 0, 0.2); /* Slightly dark glass to make text readable */
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  backdrop-filter: blur(4px);
+  margin-top: 0.5rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -7,6 +7,8 @@ function Countdown({ tickAudioRef, audioEnabled }) {
     const targetDate = new Date("July 1, 2026 00:00:00").getTime();
     const pad = (num) => String(num).padStart(2, "0");
     const [showColon, setShowColon] = useState(true);
+    const [flip, setFlip] = useState(false);
+    const prevSecondsRef = useRef(null);
 
     // keep ref in sync
     useEffect(() => {
@@ -23,25 +25,35 @@ function Countdown({ tickAudioRef, audioEnabled }) {
     };
 
     useEffect(() => {
-        const interval = setInterval(() => {
+    // This variable tracks whether we should update the clock/sound (every 2nd 500ms cycle)
+    let isSecondCycle = false;
+
+    const interval = setInterval(() => {
+        // 1. Always blink the colon (every 500ms)
+        setShowColon((prev) => !prev);
+
+        // 2. Only update the timer and play sound every 1000ms
+        if (isSecondCycle) {
             const now = new Date().getTime();
             const diff = targetDate - now;
 
-            if (diff <= 0) return;
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
 
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((diff / (1000 * 60)) % 60);
-            const seconds = Math.floor((diff / 1000) % 60);
-            setShowColon((prev) => !prev);
+                setTimeLeft({ days, hours, minutes, seconds });
+                playTick(); 
+            }
+        }
 
-            setTimeLeft({ days, hours, minutes, seconds });
+        // Toggle the cycle so the timer logic runs once every 1 second (500ms * 2)
+        isSecondCycle = !isSecondCycle;
+    }, 500);
 
-            playTick(); // 🔊 controlled by toggle
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, []);
+    return () => clearInterval(interval);
+}, [targetDate]); // Added targetDate as a dependency to ensure accuracy if it changes
 
     return (
         <div className="countdown">
@@ -51,7 +63,9 @@ function Countdown({ tickAudioRef, audioEnabled }) {
 
             <p className={`colon ${showColon ? "on" : "off"}`}>:</p>
 
-            <span className="digit">{pad(timeLeft.seconds || 0)}</span>
+            <span className={`digit seconds ${flip ? "flip" : ""}`}>
+                {pad(timeLeft.seconds || 0)}
+            </span>
         </div>
     );
 }
