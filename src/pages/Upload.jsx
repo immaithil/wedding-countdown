@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-// IMPORTANT: Point this to wherever you pasted the new CSS above!
 import "../styles/upload.css"; 
 
 function Upload() {
   const [file, setFile] = useState(null);
   const [uploaderName, setUploaderName] = useState("");
   const [status, setStatus] = useState(""); 
-  const [isUploading, setIsUploading] = useState(false); // To disable button while uploading
+  const [isUploading, setIsUploading] = useState(false); 
 
   const handleUpload = async () => {
     if (!file || !uploaderName) {
@@ -41,7 +40,7 @@ function Upload() {
   return (
     <div className="upload-container">
       <div className="upload-glass-card">
-        <h2>➕ Share a Memory</h2>
+        <h2 className="cursive-title">✨ Share a Memory</h2>
 
         <input 
           type="file" 
