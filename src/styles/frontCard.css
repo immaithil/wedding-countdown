@@ -1,119 +1,229 @@
-/* 🎴 FRONT CARD BASE */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+/* --- MAIN CONTAINER & BACKGROUND --- */
+/* --- MAIN CONTAINER & BACKGROUND --- */
 .card-front {
-  position: absolute;
-  inset: 0;
-
-  background: linear-gradient(
-    135deg,
-    #092f36,
-    #0f4c5c
-  );
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    /* Matches the Gallery background exactly */
+    background: radial-gradient(circle at 50% 0%, #fff0f3 0%, #ffffff 40%, #f4f9f9 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    overflow: hidden;
+    position: relative;
 }
 
-/* subtle texture */
-.card-front::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  background: radial-gradient(
-    rgba(255,255,255,0.05) 1px,
-    transparent 1px
-  );
-
-  background-size: 4px 4px;
-  opacity: 0.2;
+/* --- GLASSMORPHISM EFFECT & ANIMATION --- */
+.glass-overlay {
+    width: 80%;
+    max-width: 900px;
+    height: 60%;
+    /* We changed this from white to a dark translucent tint to contrast the bright art */
+    background: rgba(30, 10, 10, 0.5); 
+    backdrop-filter: blur(18px); /* Slightly stronger blur */
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); /* Stronger shadow to lift it off the background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    transition: transform 0.6s ease;
+    animation: floatCard 4s infinite ease-in-out;
 }
 
-/* shine effect */
-.card-front::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
+/* --- TRADITIONAL ICONS & ANIMATIONS --- */
 
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.2),
-    transparent
-  );
-
-  animation: shine 4s infinite;
+/* --- Shehnai Re-positioned & Pointed Upwards --- */
+.shehnai-icon {
+    width: 140px; 
+    height: auto;
+    opacity: 0.85;
+    position: absolute;
+    /* Move to TOP of screen */
+    top: 10%; 
+    z-index: 10;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
 }
 
-@keyframes shine {
-  0% { left: -100%; }
-  100% { left: 150%; }
+.shehnai-left {
+    left: 8%;
+    /* Point up and inward */
+    transform: rotate(25deg); 
 }
 
-/* inner content */
+.shehnai-right {
+    right: 8%;
+    /* Point up and inward, flipped perfectly */
+    transform: rotate(-25deg) scaleX(-1); 
+}
+
+/* --- Music Tune Animation --- */
+.tune-notes {
+    width: 50px;
+    height: auto;
+    opacity: 0; /* Starts hidden, animated by keyframes */
+    position: absolute;
+    top: 5%; /* Anchored at the mouthpiece tip */
+    z-index: 11;
+    filter: drop-shadow(0px 2px 4px rgba(255,208,187, 0.4));
+}
+
+.tune-left {
+    left: 10%;
+}
+
+.tune-right {
+    right: 10%;
+}
+
+/* Music Tune Keyframe Animation */
+@keyframes floatNotes {
+    0% {
+        transform: translateY(10px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-30px) rotate(-10deg);
+        opacity: 0;
+    }
+}
+
+/* Apply the tune animation with delays to make it look continuous */
+.left-tune-group .tune-left, 
+.right-tune-group .tune-right {
+    animation: floatNotes 3s infinite ease-out;
+}
+
+/* Delay the right tune slightly so they don't sync */
+.right-tune-group .tune-right {
+    animation-delay: 1.5s;
+}
+
+/* --- Hawan Kund & Fire Animation --- */
+.hawan-kund-icon {
+    width: 90px;
+    height: auto;
+    opacity: 0.95;
+    margin: 1rem 0 2rem 0; 
+    filter: drop-shadow(0px 4px 10px rgba(255, 126, 103, 0.4));
+    position: relative;
+    z-index: 5;
+}
+
+/* Targeting the flame IDs defined in the JSX */
+#flame-center, #flame-left, #flame-right {
+    transform-origin: center bottom; /* Anchor fire to the base */
+    animation: igniteFire 2s infinite ease-in-out;
+}
+
+/* Fire Flicker Keyframe Animation */
+@keyframes igniteFire {
+    0%, 100% {
+        transform: scale(1) translateY(0);
+        opacity: 0.8;
+    }
+    25% {
+        transform: scale(1.05) translateY(-1px);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.02) translateY(0px);
+        opacity: 0.9;
+    }
+    75% {
+        transform: scale(1.07) translateY(-2px);
+        opacity: 1;
+    }
+}
+
+/* Vary the flame timings slightly for randomness */
+#flame-left {
+    animation-duration: 1.8s;
+    animation-delay: 0.2s;
+}
+
+#flame-right {
+    animation-duration: 2.2s;
+    animation-delay: 0.4s;
+}
+
+/* --- GLASSMORPHISM EFFECT & ANIMATION --- */
+.glass-overlay {
+    width: 80%;
+    max-width: 900px;
+    height: 60%;
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    transition: transform 0.6s ease;
+    animation: floatCard 4s infinite ease-in-out;
+}
+
+/* --- INNER TEXT & LAYOUT --- */
 .front-inner {
-  position: relative;
-  text-align: center;
-  color: #fff6ef;
-  z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
 }
 
-/* ganesha */
 .ganesha-front {
-  width: 70px;
-  margin-bottom: 20px;
-
-  filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+    width: 80px;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
 }
 
-/* title */
 .invite-title {
-  font-size: 24px;
-  letter-spacing: 2px;
-  color: #ff8fa3;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 2rem;
+    color: #ffd0bb;
+    margin: 0;
+    opacity: 0.8;
 }
 
-/* divider */
-.divider {
-  width: 80px;
-  height: 1px;
-  margin: 15px auto;
-
-  background: linear-gradient(
-    to right,
-    transparent,
-    #ff8fa3,
-    transparent
-  );
+/* --- DEV-NAGARI SHUBH VIVAH --- */
+.shubh-vivah {
+    font-size: 4rem;
+    color: #ffd0bb;
+    font-weight: 700;
+    margin: 1.5rem 0 1rem 0; 
 }
 
-/* names */
-.invite-names {
-  font-family: 'Great Vibes', cursive;
-  font-size: 48px;
-  margin-top: 10px;
-}
-
-/* tap text */
 .tap-text {
-  margin-top: 20px;
-  font-size: 13px;
-  opacity: 0.6;
-  letter-spacing: 1px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: white;
+    opacity: 0.9;
+    cursor: pointer;
+    margin-top: auto;
 }
 
-/* subtle breathing */
-.front-inner {
-  animation: frontBreath 3s ease-in-out infinite;
-}
-
-@keyframes frontBreath {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
+/* --- KEYFRAMES FOR THE FLOATING ANIMATION --- */
+@keyframes floatCard {
+    0%, 100% {
+        transform: translateY(0px) rotateX(2deg);
+    }
+    50% {
+        transform: translateY(-15px) rotateX(-2deg);
+    }
 }

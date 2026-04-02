@@ -3,7 +3,6 @@
 
 /* --- AIRY DAYTIME BACKGROUND --- */
 .upload-container {
-  /* Matches the Gallery and Landing Page */
   background: radial-gradient(circle at 50% 0%, #fff0f3 0%, #ffffff 40%, #f4f9f9 100%);
   min-height: 100vh;
   display: flex;
@@ -11,6 +10,7 @@
   align-items: center; 
   padding: 2rem;
   box-sizing: border-box;
+  position: relative; /* REQUIRED for the back button positioning */
 }
 
 /* --- LIGHT FROSTED GLASS CARD --- */
@@ -27,21 +27,21 @@
   flex-direction: column;
   align-items: center;
   gap: 1.5rem; 
-  box-shadow: 0 10px 40px rgba(92, 146, 145, 0.08); /* Faint teal shadow */
+  box-shadow: 0 10px 40px rgba(92, 146, 145, 0.08); 
   text-align: center;
 }
 
 .cursive-title {
   font-family: 'Dancing Script', cursive;
   font-size: 2.8rem;
-  color: #f27b8a; /* Soft coral pink */
+  color: #f27b8a; 
   margin: 0 0 0.5rem 0;
   text-shadow: 1px 1px 2px rgba(242, 123, 138, 0.15);
 }
 
 /* --- TEXT & FILE INPUT TEXT COLOR --- */
 .glass-file-input {
-  color: #333; /* Dark grey instead of white */
+  color: #333; 
   width: 100%;
   max-width: 320px;
   font-size: 0.95rem;
@@ -52,7 +52,7 @@
 .glass-file-input::file-selector-button {
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(0, 0, 0, 0.05);
-  color: #5c9291; /* Muted Teal */
+  color: #5c9291; 
   padding: 0.6rem 1.2rem;
   border-radius: 20px;
   cursor: pointer;
@@ -77,7 +77,7 @@
   border-radius: 20px;
   width: 100%;
   max-width: 320px;
-  color: #333; /* Dark text */
+  color: #333; 
   font-size: 1rem;
   font-weight: 500;
   box-sizing: border-box;
@@ -87,18 +87,18 @@
 }
 
 .glass-text-input::placeholder {
-  color: #a0a0a0; /* Crisp, readable placeholder */
+  color: #a0a0a0; 
 }
 
 .glass-text-input:focus {
   background: rgba(255, 255, 255, 0.9);
-  border-color: #f27b8a; /* Soft pink border on focus */
+  border-color: #f27b8a; 
   box-shadow: 0 0 15px rgba(242, 123, 138, 0.15);
 }
 
 /* --- PREMIUM SOLID ACTION BUTTON --- */
 .glass-submit-btn {
-  background: #f27b8a; /* Solid soft coral to make the action obvious */
+  background: #f27b8a; 
   border: none;
   color: white;
   padding: 0.9rem 3rem;
@@ -114,7 +114,7 @@
 }
 
 .glass-submit-btn:hover:not(:disabled) {
-  background: #e66a79; /* Slightly darker pink on hover */
+  background: #e66a79; 
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(242, 123, 138, 0.4);
 }
@@ -131,8 +131,8 @@
 
 /* --- CLEAN STATUS MESSAGE --- */
 .glass-status {
-  color: #5c9291; /* Teal text */
-  background: rgba(255, 255, 255, 0.85); /* Bright frosted background */
+  color: #5c9291; 
+  background: rgba(255, 255, 255, 0.85); 
   border: 1px solid rgba(255, 255, 255, 1);
   padding: 0.8rem 1.5rem;
   border-radius: 12px;
@@ -147,4 +147,50 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- GLASSMORPHISM BACK BUTTON --- */
+.glass-back-btn {
+  position: absolute; 
+  top: 2rem;
+  left: 2rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #5c9291; 
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 30px; 
+  padding: 0.6rem 1.2rem 0.6rem 1rem;
+  box-shadow: 0 6px 20px rgba(92, 146, 145, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-back-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(92, 146, 145, 0.2);
+  color: #f27b8a; 
+}
+
+.glass-back-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 10px rgba(92, 146, 145, 0.1);
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 600px) {
+  .glass-back-btn {
+      top: 1rem;
+      left: 1rem;
+      padding: 0.5rem 1rem 0.5rem 0.8rem;
+      font-size: 0.85rem;
+  }
 }

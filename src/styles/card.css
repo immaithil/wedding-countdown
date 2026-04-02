@@ -22,7 +22,7 @@
   backface-visibility: hidden;
 }
 
-.card-front {
+/* .card-front {
   position: absolute;
   inset: 0;
 
@@ -33,7 +33,7 @@
   align-items: center;
 
   overflow: hidden;
-}
+} */
 
 /* subtle texture */
 .card-front::before {
@@ -66,7 +66,6 @@
     transparent
   );
 
-  animation: shine 6s ease-in-out infinite; /* slower */
 }
 
 @keyframes shine {
