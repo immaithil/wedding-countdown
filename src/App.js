@@ -5,6 +5,8 @@ import "./App.css";
 import FlipCard from "./components/FlipCard";
 import Gallery from "./pages/Gallery";
 import Upload from "./pages/Upload";
+import Details from "./pages/Details";
+
 
 function MainApp() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +51,7 @@ function MainApp() {
         />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/upload" element={<Upload />} />
+        <Route path="/details" element={<Details />} />
       </Routes>
     </div>
   );

@@ -1,0 +1,481 @@
+/* --- FONTS --- */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* --- PAGE CONTAINER --- */
+.details-page-container {
+    background: radial-gradient(circle at 50% 0%, #fff0f3 0%, #ffffff 40%, #f4f9f9 100%);
+    height: 100vh; /* Enables scrolling within the page */
+    width: 100vw;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-sizing: border-box;
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+
+/* --- GLASSMORPHISM BACK BUTTON --- */
+.glass-back-btn {
+    position: absolute; 
+    top: 2rem;
+    left: 2rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #5c9291; 
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 30px; 
+    padding: 0.6rem 1.2rem 0.6rem 1rem;
+    box-shadow: 0 6px 20px rgba(92, 146, 145, 0.1);
+    transition: all 0.3s ease;
+}
+
+.glass-back-btn:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(92, 146, 145, 0.2);
+    color: #f27b8a; 
+}
+
+.glass-back-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 10px rgba(92, 146, 145, 0.1);
+}
+
+/* --- TITLE GLASS HEADER --- */
+.details-header-glass {
+    /* Angled glass shine */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50px;
+    padding: 0.8rem 3.5rem;
+    margin: 3rem 0 2rem 0;
+    /* Inner top edge reflection + Outer soft shadow */
+    box-shadow: 
+        inset 0 2px 2px rgba(255, 255, 255, 0.8),
+        0 8px 30px rgba(92, 146, 145, 0.1);
+    animation: fadeDown 0.6s ease-out;
+}
+
+.cursive-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: #f27b8a;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(242, 123, 138, 0.2);
+}
+
+/* --- BASE TRUE GLASS CARD STYLES --- */
+.details-glass-card {
+    /* Highly transparent white fading into a very faint teal for contrast */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(92, 146, 145, 0.05) 100%);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    
+    /* Brighter, sharper edge border */
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
+    
+    /* Stronger bright white rim on the inside, and a slightly deeper teal shadow on the outside */
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 1), 
+        inset 2px 0 4px rgba(255, 255, 255, 0.6),
+        0 15px 35px rgba(92, 146, 145, 0.2);
+        
+    padding: 2rem;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation: fadeUp 0.6s ease-out backwards;
+}
+
+.details-glass-card:hover {
+    transform: translateY(-5px);
+    /* Make the glass "glow" slightly when hovered */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(92, 146, 145, 0.1) 100%);
+    box-shadow: 
+        inset 0 2px 6px rgba(255, 255, 255, 1), 
+        inset 2px 0 6px rgba(255, 255, 255, 0.8),
+        0 20px 50px rgba(92, 146, 145, 0.3);
+}
+/* --- VENUE CARD (Top Section) --- */
+.venue-card {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 2rem;
+    animation-delay: 0.1s;
+    text-align: center;
+}
+
+.venue-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.venue-header h2 {
+    font-family: 'Poppins', sans-serif;
+    color: #5c9291;
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.address-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.transit-info {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    border-top: 1px solid rgba(92, 146, 145, 0.2);
+    padding-top: 1.5rem;
+}
+
+.transit-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.transit-item strong {
+    color: #f27b8a;
+    font-size: 0.9rem;
+    display: block;
+}
+
+.transit-item p {
+    margin: 0;
+    color: #555;
+    font-weight: 500;
+}
+
+/* --- EVENTS TIMELINE GRID --- */
+.events-timeline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    width: 100%;
+    max-width: 800px;
+    padding-bottom: 3rem; /* Extra padding at the bottom of the page */
+}
+
+/* Standard Event Cards (Kumran & Haldi) */
+.standard-event {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation-delay: 0.2s;
+}
+
+.standard-event h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #5c9291;
+    font-size: 1.4rem;
+    margin: 0.5rem 0;
+}
+
+/* Custom SVG Icons */
+.custom-event-icon {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+}
+
+.standard-event:hover .custom-event-icon {
+    transform: scale(1.1) rotate(2deg);
+}
+
+.event-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.event-divider {
+    width: 40px;
+    height: 3px;
+    background: #f27b8a;
+    border-radius: 2px;
+    margin: 1rem 0;
+}
+
+.event-date {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* --- HERO MARRIAGE CARD (Special Pink Glass) --- */
+.hero-event {
+    grid-column: span 2; 
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 3rem 2rem;
+    
+    /* Subtle pink/white glass gradient */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(242, 123, 138, 0.15) 100%);
+    border: 1px solid rgba(242, 123, 138, 0.3);
+    
+    /* Pink-tinted shadow and bright white top reflection */
+    box-shadow: 
+        inset 0 2px 3px rgba(255, 255, 255, 0.9),
+        0 15px 45px rgba(242, 123, 138, 0.25);
+        
+    animation-delay: 0.3s;
+}
+
+.hero-event:hover {
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 1),
+        0 25px 60px rgba(242, 123, 138, 0.35);
+}
+
+/* Cinematic Glow Effect */
+.hero-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(242, 123, 138, 0.1) 0%, transparent 60%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+
+
+.hero-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+    color: #f27b8a;
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-family: 'Poppins', sans-serif;
+    color: #5c9291;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0.5rem 0 1.5rem 0;
+}
+
+.hero-divider {
+    width: 80px;
+    margin: 1.5rem auto;
+}
+
+.hero-date {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+/* --- GATHBANDHAN PNG ANIMATION --- */
+.wedding-knot-img {
+    width: 160px; /* Adjust this to make it the perfect size for your card */
+    height: auto;
+    margin: 0 auto 1rem auto;
+    display: block;
+    
+    /* Adds a beautiful pinkish-gold shadow underneath the PNG */
+    filter: drop-shadow(0px 8px 12px rgba(242, 123, 138, 0.3));
+    
+    /* Makes the knot gently float up and down */
+    animation: floatGathbandhan 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatGathbandhan {
+    0% { 
+        transform: translateY(0px) scale(1); 
+        filter: drop-shadow(0px 8px 12px rgba(242, 123, 138, 0.3)); 
+    }
+    100% { 
+        transform: translateY(-8px) scale(1.02); 
+        filter: drop-shadow(0px 14px 20px rgba(242, 123, 138, 0.5)); 
+    }
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    .glass-back-btn {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.5rem 1rem 0.5rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    .details-header-glass {
+        margin-top: 4rem; /* Makes room for the back button on mobile */
+    }
+
+    .transit-info {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    .transit-item {
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .events-timeline-grid {
+        grid-template-columns: 1fr; /* Stack cards on mobile */
+    }
+    .hero-event {
+        grid-column: span 1;
+    }
+    .hero-title {
+        font-size: 2.8rem;
+    }
+    .details-page-container {
+        padding: 1rem;
+    }
+}
+
+/* --- GOOGLE MAPS CONTAINER --- */
+.map-container {
+    width: 100%;
+    height: 250px; /* Adjust height as needed */
+    margin-bottom: 1.5rem;
+    border-radius: 16px; /* Keeps it soft and modern */
+    overflow: hidden; /* Ensures the square iframe doesn't poke out of the rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.5); 
+    
+}
+
+
+/* Ensure the iframe fills the container perfectly */
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+/* --- TRANSIT DIRECTIONS BUTTONS --- */
+.transit-text-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.glass-direction-btn {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 0.3rem 0.8rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #f27b8a;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    /* Tiny glass pill design */
+    background: rgba(242, 123, 138, 0.1);
+    border: 1px solid rgba(242, 123, 138, 0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    
+    transition: all 0.2s ease;
+}
+
+.glass-direction-btn:hover {
+    background: rgba(242, 123, 138, 0.2);
+    color: white;
+    background-color: #f27b8a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(242, 123, 138, 0.2);
+}
+.map-container > div {
+    width: 100%;
+    height: 100%;
+}
+/* --- CUSTOM GOOGLE MAPS PIN --- */
+.custom-venue-marker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+}
+
+.marker-glass {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid #5c9291; /* Signature Teal */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(92, 146, 145, 0.3);
+    z-index: 2;
+}
+
+.marker-initials {
+    font-family: 'Dancing Script', cursive;
+    color: #f27b8a; /* Signature Pink */
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 2px; /* Slight optical adjustment for cursive fonts */
+}
+
+.marker-pulse {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #f27b8a;
+    border-radius: 50%;
+    z-index: 1;
+    animation: mapPulse 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Beautiful radar ripple effect */
+@keyframes mapPulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(2.5); opacity: 0; }
+}

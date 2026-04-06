@@ -22,18 +22,6 @@
   backface-visibility: hidden;
 }
 
-/* .card-front {
-  position: absolute;
-  inset: 0;
-
-  background: linear-gradient(135deg, #092f364f, #0f4c5c);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  overflow: hidden;
-} */
 
 /* subtle texture */
 .card-front::before {

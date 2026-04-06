@@ -43,10 +43,21 @@ function BackCard({ tickAudioRef, audioEnabled }) {
                 </div>
 
             </div>
+
             <div className="action-buttons">
+                {/* --- NEW DETAILS BUTTON --- */}
                 <button 
                     onClick={(e) => {
-                        e.stopPropagation(); // 🛑 Stops event bubbling
+                        e.stopPropagation();
+                        navigate("/details");
+                    }}
+                >
+                    Details
+                </button>
+
+                <button 
+                    onClick={(e) => {
+                        e.stopPropagation(); 
                         navigate("/gallery");
                     }}
                 >
@@ -55,7 +66,7 @@ function BackCard({ tickAudioRef, audioEnabled }) {
 
                 <button 
                     onClick={(e) => {
-                        e.stopPropagation(); // 🛑 Stops event bubbling
+                        e.stopPropagation(); 
                         navigate("/upload");
                     }}
                 >
