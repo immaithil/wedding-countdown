@@ -52,6 +52,43 @@
     box-shadow: 0 3px 10px rgba(92, 146, 145, 0.1);
 }
 
+/* --- FLOATING GLASS HOME BUTTON --- */
+.glass-home-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px; /* Moved to Top Right */
+    z-index: 1000;
+    
+    /* Glassmorphism styling */
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    
+    /* Perfect Circle Dimension */
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    padding: 0;
+    
+    color: #5c9291; /* Signature Teal */
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    
+    /* Centers the SVG icon perfectly */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.glass-home-btn:hover {
+    background: rgba(255, 255, 255, 0.85);
+    transform: translateY(-2px) scale(1.05); /* Slight pop out effect */
+    box-shadow: 0 6px 15px rgba(92, 146, 145, 0.2);
+    color: #f27b8a; /* Icon turns Signature Pink on hover */
+}
+
 /* --- TITLE GLASS HEADER --- */
 .details-header-glass {
     /* Angled glass shine */
@@ -478,4 +515,22 @@
 @keyframes mapPulse {
     0% { transform: scale(1); opacity: 0.6; }
     100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* --- COPYRIGHT FOOTER --- */
+.wedding-footer {
+    text-align: center;
+    padding: 3rem 1rem 2rem 1rem;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 10; /* Keeps it above any background elements */
+}
+
+.wedding-footer p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    color: #5c9291; /* Signature Teal */
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+    margin: 0;
 }

@@ -185,3 +185,19 @@
     transform: rotateY(180deg) scale(1);
   }
 }
+
+.backcard-footer {
+    text-align: center;
+    padding: 3rem 1rem 2rem 1rem;
+    margin-top: 2rem;
+    z-index: 10; /* Keeps it above any background elements */
+}
+
+.backcard-footer p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    color: #5c9291; /* Signature Teal */
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+    margin: 0;
+}

@@ -88,6 +88,9 @@ function FrontCard() {
                     <p className="tap-text">Tap to Open</p>
                 </div>
             </div>
+            <footer className="frontcard-footer absolute-footer">
+                <p>© 2026 Ashish &amp; Prashansa. Crafted with ❤️ for our special day.</p>
+            </footer>
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../styles/gallery.css";
 
 function Gallery() {
@@ -7,7 +8,9 @@ function Gallery() {
     const [loading, setLoading] = useState(true);
     const [loadingMessage, setLoadingMessage] = useState("Loading beautiful memories...");
     const [sortBy, setSortBy] = useState("newest");
-    
+    const navigate = useNavigate();
+
+
     // NEW: State to manage the lightbox
     const [lightboxImage, setLightboxImage] = useState(null);
 
@@ -41,7 +44,7 @@ function Gallery() {
         const voteKey = `voted_on_image_${id}`;
         const previousVote = localStorage.getItem(voteKey);
 
-        if (previousVote === clickedAction) return; 
+        if (previousVote === clickedAction) return;
 
         localStorage.setItem(voteKey, clickedAction);
 
@@ -74,7 +77,7 @@ function Gallery() {
             const response = await fetch(fileUrl);
             const blob = await response.blob();
             const blobUrl = URL.createObjectURL(blob);
-            
+
             const link = document.createElement("a");
             link.href = blobUrl;
             link.download = `wedding-photo-${id}.jpg`;
@@ -98,11 +101,33 @@ function Gallery() {
             const scoreB = b.upvotes - b.downvotes;
             return scoreB - scoreA;
         }
-        return b.id - a.id; 
+        return b.id - a.id;
     });
 
+
     return (
+        
         <div className="gallery-page-container">
+            <button
+                className="glass-home-btn"
+                onClick={() => navigate('/')} /* Navigates explicitly to the Home page */
+                aria-label="Home"
+            >
+                {/* Beautiful crisp SVG Home Icon */}
+                <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </button>
             <div className="gallery-title-glass">
                 <h2 className="cursive-title">📸 Wedding Gallery</h2>
             </div>
@@ -110,8 +135,8 @@ function Gallery() {
             {!loading && images.length > 0 && (
                 <div className="sort-container">
                     <label className="sort-label">Sort by:</label>
-                    <select 
-                        value={sortBy} 
+                    <select
+                        value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
                         className="glass-dropdown"
                     >
@@ -183,14 +208,17 @@ function Gallery() {
             {lightboxImage && (
                 <div className="lightbox active" onClick={() => setLightboxImage(null)}>
                     <span className="close-btn">&times;</span>
-                    <img 
-                        src={lightboxImage} 
-                        className="lightbox-content" 
-                        alt="Enlarged view" 
+                    <img
+                        src={lightboxImage}
+                        className="lightbox-content"
+                        alt="Enlarged view"
                         onClick={(e) => e.stopPropagation()} /* Prevents closing if clicking the image itself */
                     />
                 </div>
             )}
+            <footer className="wedding-footer">
+                <p>© 2026 Ashish &amp; Prashansa. Crafted with ❤️ for our special day.</p>
+            </footer>
         </div>
     );
 }

@@ -106,6 +106,26 @@ function Details() {
                 </svg>
                 Back
             </button>
+            <button
+                className="glass-home-btn"
+                onClick={() => navigate('/')} /* Navigates explicitly to the Home page */
+                aria-label="Home"
+            >
+                {/* Beautiful crisp SVG Home Icon */}
+                <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </button>
 
             <div className="details-header-glass">
                 <h1 className="cursive-title">The Celebration</h1>
@@ -220,6 +240,9 @@ function Details() {
                 </div>
 
             </div>
+            <footer className="wedding-footer">
+                <p>© 2026 Ashish &amp; Prashansa. Crafted with ❤️ for our special day.</p>
+            </footer>
         </div>
     );
 }

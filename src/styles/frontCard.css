@@ -227,3 +227,25 @@
         transform: translateY(-15px) rotateX(-2deg);
     }
 }
+.frontcard-footer {
+    text-align: center;
+    padding: 3rem 1rem 2rem 1rem;
+    margin-top: 2rem;
+    z-index: 10; /* Keeps it above any background elements */
+}
+
+.frontcard-footer p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    color: #5c9291; /* Signature Teal */
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.absolute-footer {
+    position: absolute;
+    bottom: 10px; /* Pushes it to the very bottom */
+    left: 0;
+    width: 100%; /* Spans the full width so text stays centered */
+}
