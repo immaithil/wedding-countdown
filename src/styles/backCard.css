@@ -201,3 +201,104 @@
     letter-spacing: 0.5px;
     margin: 0;
 }
+
+/* --- CELEBRATION STATE --- */
+.celebration-state {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.celebration-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.8rem;
+    color: #f27b8a; /* Signature Pink */
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(242, 123, 138, 0.4);
+}
+
+.celebration-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    color: #5c9291; /* Signature Teal */
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.fade-in {
+    animation: fadeInState 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes fadeInState {
+    from { opacity: 0; transform: translateY(10px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* --- ADD TO CALENDAR COMPONENT --- */
+.calendar-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 1rem;
+    z-index: 50; /* Keeps dropdown above the other buttons */
+}
+
+.calendar-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #5c9291;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calendar-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: #f27b8a;
+}
+
+.calendar-dropdown {
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    min-width: 160px;
+    animation: dropIn 0.2s ease-out forwards;
+}
+
+.calendar-dropdown a,
+.calendar-dropdown button {
+    background: transparent;
+    border: none;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    color: #5c9291;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.calendar-dropdown a:hover,
+.calendar-dropdown button:hover {
+    background: rgba(92, 146, 145, 0.1);
+    color: #f27b8a;
+}
+
+@keyframes dropIn {
+    from { opacity: 0; transform: translate(-50%, -10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
