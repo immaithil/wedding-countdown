@@ -215,3 +215,30 @@
     left: 0;
     width: 100%; /* Spans the full width so text stays centered */
 }
+.upload-subtitle {
+    font-size: 0.9rem;
+    color: #5c9291;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+.file-count {
+    font-weight: 600;
+    color: #f27b8a;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Make the button look different when disabled */
+.glass-submit-btn:disabled {
+    background: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.3);
+    cursor: not-allowed;
+    border-color: transparent;
+}

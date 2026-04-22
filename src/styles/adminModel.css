@@ -1,0 +1,124 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 76, 92, 0.3); /* Soft teal overlay */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.glass-modal {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 1);
+    padding: 2rem;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 380px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-header h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #5c9291;
+    margin: 10px 0;
+    letter-spacing: 1px;
+}
+
+.lock-icon {
+    font-size: 2rem;
+}
+
+.modal-desc {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(92, 146, 145, 0.2);
+    background: white;
+    text-align: center;
+    font-size: 1.2rem;
+    letter-spacing: 5px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.modal-input:focus {
+    border-color: #f27b8a;
+    box-shadow: 0 0 10px rgba(242, 123, 138, 0.1);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.modal-btn.cancel {
+    background: #f4f9f9;
+    color: #5c9291;
+}
+
+.modal-btn.confirm {
+    background: #f27b8a;
+    color: white;
+}
+
+.modal-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+@keyframes modalPop {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+/* ... existing styles ... */
+
+.modal-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Red text for warnings/confirmations */
+.modal-desc {
+    color: #444;
+    line-height: 1.5;
+    padding: 0 10px;
+}
+
+/* If you want the 'Yes, Delete' button to look more serious */
+.glass-modal[data-mode="confirm"] .confirm {
+    background: #ff4d4d;
+}
+
+.modal-input {
+    /* ... keep existing ... */
+    border: 2px solid rgba(15, 76, 92, 0.1);
+    transition: border 0.3s ease;
+}
+
+.modal-input:focus {
+    border-color: #f27b8a;
+}

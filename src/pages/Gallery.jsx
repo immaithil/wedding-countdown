@@ -2,23 +2,30 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/gallery.css";
+import AdminModal from "../components/AdminModal.jsx";
+import ImageCard from "../components/ImageCard.jsx"; // Import the new component
 
 function Gallery() {
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingMessage, setLoadingMessage] = useState("Loading beautiful memories...");
     const [sortBy, setSortBy] = useState("newest");
+    const [targetImageId, setTargetImageId] = useState(null);
+    const [lightboxImage, setLightboxImage] = useState(null);
     const navigate = useNavigate();
 
-
-    // NEW: State to manage the lightbox
-    const [lightboxImage, setLightboxImage] = useState(null);
+    const [modalConfig, setModalConfig] = useState({
+        isOpen: false,
+        mode: "auth",
+        title: "",
+        message: ""
+    });
 
     const API_BASE_URL = "https://wedding-app-3xwt.onrender.com";
+    const closeParams = { ...modalConfig, isOpen: false };
 
     useEffect(() => {
         fetchGallery();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const fetchGallery = async (retryCount = 0) => {
@@ -30,9 +37,7 @@ function Gallery() {
             console.error("Error fetching gallery:", error);
             if (retryCount < 10) {
                 setLoadingMessage("Waking up the secure server (this takes about 50 seconds)...");
-                setTimeout(() => {
-                    fetchGallery(retryCount + 1);
-                }, 5000);
+                setTimeout(() => fetchGallery(retryCount + 1), 5000);
             } else {
                 setLoadingMessage("Failed to load gallery. Please refresh the page.");
                 setLoading(false);
@@ -43,32 +48,62 @@ function Gallery() {
     const handleVote = async (id, clickedAction) => {
         const voteKey = `voted_on_image_${id}`;
         const previousVote = localStorage.getItem(voteKey);
-
         if (previousVote === clickedAction) return;
 
         localStorage.setItem(voteKey, clickedAction);
-
         try {
             await axios.post(`${API_BASE_URL}/api/images/${id}/vote`, null, {
-                params: {
-                    action: clickedAction,
-                    previousAction: previousVote || ""
-                }
+                params: { action: clickedAction, previousAction: previousVote || "" }
             });
             fetchGallery();
-        } catch (error) {
-            console.error("Error voting:", error);
-        }
+        } catch (error) { console.error("Error voting:", error); }
     };
 
-    const handleDelete = async (id) => {
-        if (!window.confirm("Are you sure you want to delete this photo forever?")) return;
-        try {
-            await axios.delete(`${API_BASE_URL}/api/images/${id}`);
-            fetchGallery();
-        } catch (error) {
-            console.error("Error deleting image:", error);
-            alert("Failed to delete image.");
+    const handleDeleteClick = (id) => {
+        setTargetImageId(id);
+        setModalConfig({
+            isOpen: true,
+            mode: "auth",
+            title: "Admin Authorization",
+            message: "Enter passcode to unlock delete permissions."
+        });
+    };
+
+    const handleModalConfirm = async (value) => {
+        const today = new Date().getDate();
+        const dynamicPasscode = `ashish${today}`;
+
+        if (modalConfig.mode === "auth") {
+            if (value === dynamicPasscode) {
+                setModalConfig({
+                    isOpen: true,
+                    mode: "confirm",
+                    title: "Final Confirmation",
+                    message: "Passcode accepted! Are you sure you want to delete this memory forever?"
+                });
+            } else {
+                setModalConfig({
+                    isOpen: true,
+                    mode: "alert",
+                    title: "Access Denied",
+                    message: "That passcode is incorrect. Only Ashish can perform this action."
+                });
+            }
+        } else if (modalConfig.mode === "confirm") {
+            setModalConfig(closeParams);
+            try {
+                await axios.delete(`${API_BASE_URL}/api/images/${targetImageId}`);
+                fetchGallery();
+            } catch (error) {
+                setModalConfig({
+                    isOpen: true,
+                    mode: "alert",
+                    title: "Error",
+                    message: "Could not delete the image. Please check your connection."
+                });
+            }
+        } else {
+            setModalConfig(closeParams);
         }
     };
 
@@ -77,7 +112,6 @@ function Gallery() {
             const response = await fetch(fileUrl);
             const blob = await response.blob();
             const blobUrl = URL.createObjectURL(blob);
-
             const link = document.createElement("a");
             link.href = blobUrl;
             link.download = `wedding-photo-${id}.jpg`;
@@ -85,64 +119,47 @@ function Gallery() {
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(blobUrl);
-        } catch (error) {
-            console.error("Error downloading image:", error);
-            alert("Failed to download image. Try right-clicking to save.");
-        }
-    };
-
-    const getVoteState = (id) => {
-        return localStorage.getItem(`voted_on_image_${id}`);
+        } catch (error) { alert("Failed to download image."); }
     };
 
     const sortedImages = [...images].sort((a, b) => {
         if (sortBy === "top") {
-            const scoreA = a.upvotes - a.downvotes;
-            const scoreB = b.upvotes - b.downvotes;
-            return scoreB - scoreA;
+            return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
         }
         return b.id - a.id;
     });
 
-
     return (
-        
         <div className="gallery-page-container">
-            <button
-                className="glass-home-btn"
-                onClick={() => navigate('/')} /* Navigates explicitly to the Home page */
-                aria-label="Home"
-            >
-                {/* Beautiful crisp SVG Home Icon */}
-                <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                >
+            <button className="glass-home-btn" onClick={() => navigate('/')} aria-label="Home">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                 </svg>
             </button>
+
             <div className="gallery-title-glass">
                 <h2 className="cursive-title">📸 Wedding Gallery</h2>
             </div>
 
             {!loading && images.length > 0 && (
                 <div className="sort-container">
-                    <label className="sort-label">Sort by:</label>
-                    <select
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
-                        className="glass-dropdown"
-                    >
-                        <option value="newest">Newest First</option>
-                        <option value="top">Top Rated</option>
-                    </select>
+                    <div className="glass-sort-pill">
+                        <button
+                            className={`sort-option ${sortBy === 'newest' ? 'active' : ''}`}
+                            onClick={() => setSortBy('newest')}
+                        >
+                            ✨ Newest
+                        </button>
+                        <button
+                            className={`sort-option ${sortBy === 'top' ? 'active' : ''}`}
+                            onClick={() => setSortBy('top')}
+                        >
+                            🏆 Top Rated
+                        </button>
+                        {/* The sliding background highlight */}
+                        <div className={`pill-highlight ${sortBy}`} />
+                    </div>
                 </div>
             )}
 
@@ -153,58 +170,19 @@ function Gallery() {
             ) : (
                 <div className="image-grid">
                     {sortedImages.map((img) => (
-                        <div key={img.id} className="image-card">
-                            <img
-                                src={img.driveFileId}
-                                alt={`Uploaded by ${img.uploaderName}`}
-                                className="gallery-img"
-                                onClick={() => setLightboxImage(img.driveFileId)} // Opens Lightbox
-                            />
-
-                            <div className="uploader-name">
-                                📸 {img.uploaderName}
-                            </div>
-
-                            <div className="action-bar">
-                                <div className="vote-group">
-                                    <button
-                                        onClick={() => handleVote(img.id, 'up')}
-                                        className={`vote-btn ${getVoteState(img.id) === 'up' ? 'active-up' : ''}`}
-                                        title="Upvote"
-                                    >▲</button>
-                                    <span className="score">{img.upvotes - img.downvotes}</span>
-                                    <button
-                                        onClick={() => handleVote(img.id, 'down')}
-                                        className={`vote-btn ${getVoteState(img.id) === 'down' ? 'active-down' : ''}`}
-                                        title="Downvote"
-                                    >▼</button>
-                                </div>
-
-                                <div className="action-group">
-                                    <button onClick={() => handleDownload(img.driveFileId, img.id)} className="action-icon-btn save-btn" title="Download">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                            <polyline points="7 10 12 15 17 10"></polyline>
-                                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                                        </svg>
-                                    </button>
-
-                                    <button onClick={() => handleDelete(img.id)} className="action-icon-btn delete-btn" title="Delete">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <polyline points="3 6 5 6 21 6"></polyline>
-                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <ImageCard
+                            key={img.id}
+                            img={img}
+                            onVote={handleVote}
+                            onDownload={handleDownload}
+                            onDelete={handleDeleteClick}
+                            onLightbox={setLightboxImage}
+                            voteState={localStorage.getItem(`voted_on_image_${img.id}`)}
+                        />
                     ))}
                 </div>
             )}
 
-            {/* NEW: Lightbox Component Overlay */}
             {lightboxImage && (
                 <div className="lightbox active" onClick={() => setLightboxImage(null)}>
                     <span className="close-btn">&times;</span>
@@ -212,15 +190,31 @@ function Gallery() {
                         src={lightboxImage}
                         className="lightbox-content"
                         alt="Enlarged view"
-                        onClick={(e) => e.stopPropagation()} /* Prevents closing if clicking the image itself */
+                        onClick={(e) => e.stopPropagation()}
                     />
                 </div>
             )}
-            <footer className="wedding-footer">
-                <p>© 2026 Ashish &amp; Prashansa. Crafted with ❤️ for our special day.</p>
-            </footer>
+
+            
+
+            <AdminModal
+                {...modalConfig}
+                onClose={() => setModalConfig(closeParams)}
+                onConfirm={handleModalConfirm}
+            />
+            <button 
+    className="glass-fab" 
+    onClick={() => navigate('/upload')}
+    title="Upload Memories"
+>
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+</button>
         </div>
     );
+    
 }
 
 export default Gallery;

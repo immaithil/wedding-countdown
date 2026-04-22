@@ -63,10 +63,6 @@ function BackCard({ tickAudioRef, audioEnabled }) {
                     ➕ Add Photo
                 </button>
             </div>
-            
-            <footer className="backcard-footer absolute-footer">
-                <p>© 2026 Ashish &amp; Prashansa. Crafted with ❤️ for our special day.</p>
-            </footer>
         </div>
     );
 }

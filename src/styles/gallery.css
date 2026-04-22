@@ -277,3 +277,138 @@
   .close-btn { top: 10px; right: 20px; font-size: 40px; }
 }
 
+/* --- CUSTOM GLASS SORT PILL --- */
+.sort-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  z-index: 10;
+}
+
+.glass-sort-pill {
+  position: relative;
+  display: flex;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  padding: 4px;
+  border-radius: 50px;
+  box-shadow: 0 8px 25px rgba(92, 146, 145, 0.08);
+  width: fit-content;
+}
+
+.sort-option {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  padding: 0.7rem 1.8rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #5c9291;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  outline: none;
+}
+
+.sort-option.active {
+  color: white;
+}
+
+/* The Sliding Background */
+.pill-highlight {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  height: calc(100% - 8px);
+  width: calc(50% - 4px);
+  background: #f27b8a; /* Your signature pink */
+  border-radius: 50px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  box-shadow: 0 4px 12px rgba(242, 123, 138, 0.3);
+}
+
+/* Slide to 'Top Rated' */
+.pill-highlight.top {
+  transform: translateX(100%);
+}
+
+/* Slide to 'Newest' (Default) */
+.pill-highlight.newest {
+  transform: translateX(0%);
+}
+
+/* Mobile Tweak */
+@media (max-width: 600px) {
+  .sort-option {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* --- FLOATING ACTION BUTTON (FAB) --- */
+.glass-fab {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 65px;
+  height: 65px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  color: #f27b8a; /* Your signature pink */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 
+    0 8px 32px rgba(242, 123, 138, 0.2),
+    inset 0 0 10px rgba(255, 255, 255, 0.5);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.glass-fab:hover {
+  transform: scale(1.1) rotate(90deg);
+  background: #f27b8a;
+  color: white;
+  box-shadow: 0 12px 40px rgba(242, 123, 138, 0.4);
+  border-color: #f27b8a;
+}
+
+.glass-fab:active {
+  transform: scale(0.9);
+}
+
+/* Pulse animation to draw attention */
+.glass-fab::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #f27b8a;
+  opacity: 0;
+  animation: fabPulse 2.5s infinite;
+}
+
+@keyframes fabPulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Mobile Tweak: Moves it slightly so it doesn't cover content */
+@media (max-width: 600px) {
+  .glass-fab {
+    bottom: 25px;
+    right: 25px;
+    width: 55px;
+    height: 55px;
+  }
+}
+
