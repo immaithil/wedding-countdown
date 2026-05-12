@@ -366,35 +366,42 @@
   padding: 12px 24px;
   border-radius: 30px;
   
-  /* 2. ADDED BORDER: Gives the glass a defined edge so it doesn't bleed into the background */
-  border: 1px solid rgba(255, 255, 255, 0.8);
-
-  /* 3. INCREASED OPACITY: Changed from 0.2 to 0.7 so it contrasts against the screen */
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* Added for Safari support */
+  /* 1. RESTORE TRANSPARENCY: Drop opacity back to 0.25 so it is see-through again */
+  background: rgba(255, 255, 255, 0.25); 
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  
+  /* 2. THE GLASS RIM: Make the top and left borders brighter to simulate light reflecting off the glass edge */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.7);
+  border-left: 1px solid rgba(255, 255, 255, 0.7);
 
   color: #0f4c5c;
   font-weight: 600;
   cursor: pointer;
 
-  /* 4. DEEPENED SHADOWS: Lifts the button further off the background */
+  /* 3. THE LIFTOFF: A much wider, softer shadow behind the button makes the transparent glass pop against the cream background */
   box-shadow:
-    0 6px 15px rgba(0,0,0,0.15),
-    inset 0 0 10px rgba(255,255,255,0.5);
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 0 10px rgba(255, 255, 255, 0.2);
 
-  transition: all 0.3s ease;
+  /* Smoother hover transition */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   z-index: 1000;
 }
 
 /* hover */
 .action-buttons button:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   
-  /* Make it nearly solid white on hover for clear interactive feedback */
-  background: rgba(255,255,255,0.95);
+  /* Stay glassy on hover, just slightly more frosted */
+  background: rgba(255, 255, 255, 0.35);
   box-shadow:
-    0 8px 20px rgba(0,0,0,0.2),
-    inset 0 0 10px rgba(255,255,255,0.8);
+    0 12px 40px rgba(0, 0, 0, 0.2),
+    inset 0 0 15px rgba(255, 255, 255, 0.4);
+  
+  /* Brighten the rim on hover */
+  border-top: 1px solid rgba(255, 255, 255, 0.9);
+  border-left: 1px solid rgba(255, 255, 255, 0.9);
 }
 
