@@ -351,7 +351,11 @@
 }
 
 .action-buttons {
-  margin-top: 30px;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+
   display: flex;
   gap: 20px;
   justify-content: center;
@@ -361,18 +365,23 @@
 .action-buttons button {
   padding: 12px 24px;
   border-radius: 30px;
-  border: none;
+  
+  /* 2. ADDED BORDER: Gives the glass a defined edge so it doesn't bleed into the background */
+  border: 1px solid rgba(255, 255, 255, 0.8);
 
-  background: rgba(255, 255, 255, 0.2);
+  /* 3. INCREASED OPACITY: Changed from 0.2 to 0.7 so it contrasts against the screen */
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Added for Safari support */
 
   color: #0f4c5c;
   font-weight: 600;
   cursor: pointer;
 
+  /* 4. DEEPENED SHADOWS: Lifts the button further off the background */
   box-shadow:
-    0 4px 20px rgba(0,0,0,0.1),
-    inset 0 0 10px rgba(255,255,255,0.3);
+    0 6px 15px rgba(0,0,0,0.15),
+    inset 0 0 10px rgba(255,255,255,0.5);
 
   transition: all 0.3s ease;
   z-index: 1000;
@@ -381,6 +390,11 @@
 /* hover */
 .action-buttons button:hover {
   transform: translateY(-3px);
-  background: rgba(255,255,255,0.3);
+  
+  /* Make it nearly solid white on hover for clear interactive feedback */
+  background: rgba(255,255,255,0.95);
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.2),
+    inset 0 0 10px rgba(255,255,255,0.8);
 }
 
