@@ -23,18 +23,29 @@ function BackCard({ tickAudioRef, audioEnabled }) {
             <div className="bride-decor"></div>
             <div className="groom-decor"></div>
 
+            {/* MOVED TO TOP: Action buttons are now placed above the glass card */}
+            <div className="action-buttons">
+                <button onClick={(e) => { e.stopPropagation(); navigate("/details"); }}>
+                    Details
+                </button>
+                <button onClick={(e) => { e.stopPropagation(); navigate("/gallery"); }}>
+                    📸 Gallery
+                </button>
+                <button onClick={(e) => { e.stopPropagation(); navigate("/upload"); }}>
+                    ➕ Add Photo
+                </button>
+            </div>
+
             <div className="glass-card">
                 <div className="content">
                     <h1 className="names">Ashish ❤️ Prashansa</h1>
 
-                    {/* We pass the handleTimerComplete function here */}
                     <Countdown
                         tickAudioRef={tickAudioRef}
                         audioEnabled={audioEnabled}
                         onComplete={handleTimerComplete}
                     />
 
-                    {/* These labels are hidden dynamically if the wedding day has arrived! */}
                     {!isWeddingDay && (
                         <>
                             <p className="label">Days : Hours : Minutes : Seconds</p>
@@ -50,19 +61,6 @@ function BackCard({ tickAudioRef, audioEnabled }) {
                 </div>
             </div>
 
-            {/* ... Rest of your action buttons and footer stay exactly the same ... */}
-            
-            <div className="action-buttons">
-                <button onClick={(e) => { e.stopPropagation(); navigate("/details"); }}>
-                    Details
-                </button>
-                <button onClick={(e) => { e.stopPropagation(); navigate("/gallery"); }}>
-                    📸 Gallery
-                </button>
-                <button onClick={(e) => { e.stopPropagation(); navigate("/upload"); }}>
-                    ➕ Add Photo
-                </button>
-            </div>
         </div>
     );
 }
