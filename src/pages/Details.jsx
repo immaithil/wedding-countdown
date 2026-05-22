@@ -240,6 +240,10 @@ function Details() {
                 </div>
 
             </div>
+
+            {/* --- FAMILY MEMBERS SECTION --- */}
+            <FamilySection />
+            
             <footer className="wedding-footer">
                 <p>© 2026 Ashish &amp; Prashansa. Crafted with ❤️ for our special day.</p>
             </footer>
