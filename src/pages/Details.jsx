@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
 import "../styles/detailsPage.css";
 import gathbandhanImg from "../assets/gathbandhan.png";
+import FamilySection from '../components/FamilySection';
+
 
 // --- CUSTOM SVG ICONS ---
 
