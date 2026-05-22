@@ -1,0 +1,282 @@
+/* --- FAMILY SECTION --- */
+.family-section-container {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 2rem;
+}
+
+/* --- INVITE MESSAGE --- */
+.family-invite-message {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation-delay: 0.4s;
+}
+
+.invite-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.invite-highlight {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  color: #f27b8a;
+  font-style: italic;
+}
+
+/* --- FAMILY CARDS GRID --- */
+.family-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.family-card {
+  text-align: center;
+  position: relative;
+  overflow: visible;
+  cursor: pointer;
+  user-select: none;
+  padding: 2rem 1rem;
+}
+
+.family-card-title {
+  font-family: 'Poppins', sans-serif;
+  color: #5c9291;
+  font-size: 1.4rem;
+  margin: 0 0 1.2rem 0;
+  border-bottom: 2px solid rgba(242, 123, 138, 0.3);
+  padding-bottom: 0.6rem;
+}
+
+/* --- MEMBERS GRID: 4 per row horizontal --- */
+.family-members-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+  align-items: end;
+}
+
+.family-member-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.member-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #333;
+  text-transform: capitalize;
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+/* --- BALLOON ANCHOR: string attaches from here to name --- */
+.balloon-anchor {
+  position: relative;
+  width: 50px;
+  height: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* --- BALLOON WRAPPER: anchored at bottom (name), balloon floats at top --- */
+.balloon-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  will-change: opacity;
+  /* The wrapper itself doesn't move — balloon body moves inside it */
+  transform: translateY(calc(var(--rise-height, 80px) * -1));
+}
+
+.balloon-rise {
+  opacity: 1;
+  pointer-events: auto;
+  animation: riseUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.balloon-fall {
+  animation: fallDown 0.5s ease-in forwards;
+}
+
+/* --- PREMIUM GLOSSY BALLOON BODY --- */
+.balloon-draggable {
+  cursor: grab;
+  touch-action: none;
+  pointer-events: auto;
+}
+
+.balloon-draggable:active {
+  cursor: grabbing;
+}
+
+.balloon-body {
+  width: 52px;
+  height: 62px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 -8px 15px rgba(0, 0, 0, 0.2),
+    inset 0 4px 8px rgba(255, 255, 255, 0.3),
+    0 8px 20px rgba(0, 0, 0, 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow: visible;
+  transition: transform 0.05s linear;
+  will-change: transform;
+}
+
+/* Primary glossy highlight - top left */
+.balloon-shine-primary {
+  position: absolute;
+  top: 7px;
+  left: 9px;
+  width: 16px;
+  height: 14px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Secondary subtle highlight - mid right */
+.balloon-shine-secondary {
+  position: absolute;
+  top: 20px;
+  right: 8px;
+  width: 8px;
+  height: 6px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Rim reflection at bottom edge */
+.balloon-rim {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 6px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.2) 0%, transparent 80%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Knot at balloon bottom */
+.balloon-knot {
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  margin-left: -5px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top-width: 9px;
+  border-top-style: solid;
+}
+
+/* Face image inside balloon */
+.balloon-face {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 1;
+}
+
+/* --- BALLOON STRING (SVG curved, full length to name) --- */
+.balloon-string-svg {
+  width: 50px;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+.balloon-string-svg path {
+  transition: d 0.06s linear;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes riseUp {
+  0% {
+    transform: translateY(0px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(calc(var(--rise-height, 80px) * -1));
+    opacity: 1;
+  }
+}
+
+@keyframes fallDown {
+  0% {
+    opacity: 1;
+    transform: translateY(calc(var(--rise-height, 80px) * -1));
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .family-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .family-members-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+  }
+
+  .balloon-body {
+    width: 44px;
+    height: 54px;
+  }
+
+  .balloon-face {
+    width: 28px;
+    height: 28px;
+  }
+
+  .balloon-string-svg {
+    height: 45px;
+  }
+
+  .member-name {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .family-members-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
