@@ -15,7 +15,7 @@
 .invite-text {
   font-family: 'Poppins', sans-serif;
   font-size: 1.1rem;
-  color: #444;
+  color: #4a6163;
   line-height: 1.8;
   margin: 0;
 }
@@ -53,12 +53,13 @@
   padding-bottom: 0.6rem;
 }
 
-/* --- MEMBERS GRID: 4 per row horizontal --- */
+/* --- MEMBERS LAYOUT: flex wrap so name boxes float without overlap --- */
 .family-members-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.8rem;
-  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
+  align-items: flex-end;
 }
 
 .family-member-item {
@@ -67,43 +68,47 @@
   flex-direction: column;
   align-items: center;
   padding-top: 10px;
+  flex: 0 0 auto;
 }
 
 .member-name {
   font-family: 'Poppins', sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #333;
+  color: #3d5a5c;
   text-transform: capitalize;
   text-align: center;
   line-height: 1.2;
   margin-top: 2px;
-}
-
-/* --- BALLOON ANCHOR: string attaches from here to name --- */
-.balloon-anchor {
   position: relative;
-  width: 50px;
-  height: 0;
-  display: flex;
-  justify-content: center;
+  z-index: 5;
+
+  /* Glassmorphism name box */
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 4px 12px;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.8),
+    0 3px 8px rgba(92, 146, 145, 0.1);
+  white-space: nowrap;
 }
 
-/* --- BALLOON WRAPPER: anchored at bottom (name), balloon floats at top --- */
+/* --- BALLOON WRAPPER: positioned from bottom of member-item (name level) going up --- */
 .balloon-wrapper {
   position: absolute;
-  bottom: 0;
+  bottom: 12px; /* aligns with top of name text */
   left: 50%;
-  margin-left: -25px;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   opacity: 0;
   pointer-events: none;
   z-index: 10;
-  will-change: opacity;
-  /* The wrapper itself doesn't move — balloon body moves inside it */
-  transform: translateY(calc(var(--rise-height, 80px) * -1));
+  will-change: opacity, transform;
 }
 
 .balloon-rise {
@@ -116,7 +121,7 @@
   animation: fallDown 0.5s ease-in forwards;
 }
 
-/* --- PREMIUM GLOSSY BALLOON BODY --- */
+/* --- PREMIUM BUBBLE BALLOON --- */
 .balloon-draggable {
   cursor: grab;
   touch-action: none;
@@ -128,82 +133,91 @@
 }
 
 .balloon-body {
-  width: 52px;
-  height: 62px;
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    inset 0 -8px 15px rgba(0, 0, 0, 0.2),
-    inset 0 4px 8px rgba(255, 255, 255, 0.3),
-    0 8px 20px rgba(0, 0, 0, 0.15),
-    0 2px 6px rgba(0, 0, 0, 0.1);
   overflow: visible;
   transition: transform 0.05s linear;
   will-change: transform;
+
+  /* Bubble glass effect */
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    inset 0 -20px 30px rgba(0, 0, 0, 0.08),
+    inset 0 10px 20px rgba(255, 255, 255, 0.4),
+    inset 4px 4px 10px rgba(255, 255, 255, 0.25),
+    0 10px 30px rgba(0, 0, 0, 0.12),
+    0 0 15px rgba(255, 255, 255, 0.2);
 }
 
-/* Primary glossy highlight - top left */
+/* Large crescent highlight - top left (soap bubble style) */
 .balloon-shine-primary {
   position: absolute;
-  top: 7px;
-  left: 9px;
-  width: 16px;
-  height: 14px;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+  top: 8px;
+  left: 10px;
+  width: 30px;
+  height: 24px;
+  background: radial-gradient(ellipse at 40% 40%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.3) 40%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
+  transform: rotate(-20deg);
 }
 
-/* Secondary subtle highlight - mid right */
+/* Small dot highlight - lower right (secondary reflection) */
 .balloon-shine-secondary {
   position: absolute;
-  top: 20px;
-  right: 8px;
-  width: 8px;
-  height: 6px;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+  bottom: 18px;
+  right: 14px;
+  width: 14px;
+  height: 10px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
 
-/* Rim reflection at bottom edge */
+/* Rainbow iridescent rim around the bubble */
 .balloon-rim {
   position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30px;
-  height: 6px;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.2) 0%, transparent 80%);
+  inset: 0;
   border-radius: 50%;
+  background: conic-gradient(
+    from 180deg,
+    rgba(255, 100, 150, 0.08),
+    rgba(100, 200, 255, 0.08),
+    rgba(200, 100, 255, 0.08),
+    rgba(255, 200, 100, 0.08),
+    rgba(255, 100, 150, 0.08)
+  );
   pointer-events: none;
 }
 
-/* Knot at balloon bottom */
+/* Knot at bubble bottom */
 .balloon-knot {
   position: absolute;
-  bottom: -7px;
+  bottom: -8px;
   left: 50%;
   margin-left: -5px;
   width: 0;
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top-width: 9px;
+  border-top-width: 10px;
   border-top-style: solid;
+  filter: brightness(0.9);
 }
 
-/* Face image inside balloon */
+/* Face image inside bubble */
 .balloon-face {
-  width: 34px;
-  height: 34px;
+  width: 77px;
+  height: 77px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 1;
 }
@@ -222,26 +236,26 @@
 /* --- ANIMATIONS --- */
 @keyframes riseUp {
   0% {
-    transform: translateY(0px);
     opacity: 0;
+    transform: translateX(-50%) translateY(20px);
   }
   40% {
     opacity: 1;
   }
   100% {
-    transform: translateY(calc(var(--rise-height, 80px) * -1));
     opacity: 1;
+    transform: translateX(-50%) translateY(0px);
   }
 }
 
 @keyframes fallDown {
   0% {
     opacity: 1;
-    transform: translateY(calc(var(--rise-height, 80px) * -1));
+    transform: translateX(-50%) translateY(0px);
   }
   100% {
     opacity: 0;
-    transform: translateY(0px);
+    transform: translateX(-50%) translateY(20px);
   }
 }
 
@@ -252,31 +266,37 @@
   }
 
   .family-members-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.6rem;
+    gap: 1rem;
   }
 
   .balloon-body {
-    width: 44px;
-    height: 54px;
+    width: 96px;
+    height: 96px;
   }
 
   .balloon-face {
-    width: 28px;
-    height: 28px;
-  }
-
-  .balloon-string-svg {
-    height: 45px;
+    width: 67px;
+    height: 67px;
   }
 
   .member-name {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
-  .family-members-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .balloon-body {
+    width: 86px;
+    height: 86px;
+  }
+
+  .balloon-face {
+    width: 60px;
+    height: 60px;
+  }
+
+  .member-name {
+    font-size: 0.7rem;
+    padding: 4px 10px;
   }
 }
