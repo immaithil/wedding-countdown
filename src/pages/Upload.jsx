@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/upload.css";
@@ -136,20 +136,18 @@ function Upload() {
                     onChange={handleCameraCapture}
                 />
 
-                {/* DEDICATED CAMERA BUTTON */}
-                <button
-                    type="button"
-                    className="glass-submit-btn camera-btn"
-                    onClick={triggerCamera}
-                    disabled={isUploading || files.length >= 5}
-                    style={{ 
-                        marginBottom: "15px", 
-                        background: "rgba(255, 255, 255, 0.15)", 
-                        border: "1px solid rgba(255, 255, 255, 0.25)" 
-                    }}
-                >
-                    📸 Take a Photo
-                </button>
+                {/* DEDICATED CAMERA BUTTON CONTAINER */}
+<div className="camera-btn-container">
+    <button
+        type="button"
+        className="glass-camera-btn"
+        onClick={triggerCamera}
+        disabled={isUploading || files.length >= 5}
+    >
+        📸 Take a Photo
+    </button>
+</div>
+
 
                 {/* Status indicator for selected items */}
                 {files.length > 0 && (
