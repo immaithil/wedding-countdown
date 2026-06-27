@@ -3,13 +3,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/gallery.css";
 import AdminModal from "../components/AdminModal.jsx";
-import ImageCard from "../components/ImageCard.jsx"; // Import the new component
+import ImageCard from "../components/ImageCard.jsx";
 
 function Gallery() {
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingMessage, setLoadingMessage] = useState("Loading beautiful memories...");
     const [sortBy, setSortBy] = useState("newest");
+    const [searchQuery, setSearchQuery] = useState(""); // NEW: Search query state
     const [targetImageId, setTargetImageId] = useState(null);
     const [lightboxImage, setLightboxImage] = useState(null);
     const navigate = useNavigate();
@@ -122,11 +123,18 @@ function Gallery() {
         } catch (error) { alert("Failed to download image."); }
     };
 
+    // Sort images first
     const sortedImages = [...images].sort((a, b) => {
         if (sortBy === "top") {
             return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
         }
         return b.id - a.id;
+    });
+
+    // NEW: Filter sorted images by uploader name safely
+    const filteredImages = sortedImages.filter((img) => {
+        const name = img.uploaderName || "";
+        return name.toLowerCase().includes(searchQuery.toLowerCase());
     });
 
     return (
@@ -143,22 +151,34 @@ function Gallery() {
             </div>
 
             {!loading && images.length > 0 && (
-                <div className="sort-container">
-                    <div className="glass-sort-pill">
-                        <button
-                            className={`sort-option ${sortBy === 'newest' ? 'active' : ''}`}
-                            onClick={() => setSortBy('newest')}
-                        >
-                            ✨ Newest
-                        </button>
-                        <button
-                            className={`sort-option ${sortBy === 'top' ? 'active' : ''}`}
-                            onClick={() => setSortBy('top')}
-                        >
-                            🏆 Top Rated
-                        </button>
-                        {/* The sliding background highlight */}
-                        <div className={`pill-highlight ${sortBy}`} />
+                <div className="controls-wrapper">
+                    {/* NEW: Search Bar Input */}
+                    <div className="search-container">
+                        <input
+                            type="text"
+                            placeholder="🔍 Search by uploader name..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="glass-search-input"
+                        />
+                    </div>
+
+                    <div className="sort-container">
+                        <div className="glass-sort-pill">
+                            <button
+                                className={`sort-option ${sortBy === 'newest' ? 'active' : ''}`}
+                                onClick={() => setSortBy('newest')}
+                            >
+                                ✨ Newest
+                            </button>
+                            <button
+                                className={`sort-option ${sortBy === 'top' ? 'active' : ''}`}
+                                onClick={() => setSortBy('top')}
+                            >
+                                🏆 Top Rated
+                            </button>
+                            <div className={`pill-highlight ${sortBy}`} />
+                        </div>
                     </div>
                 </div>
             )}
@@ -167,9 +187,13 @@ function Gallery() {
                 <p className="status-text">{loadingMessage}</p>
             ) : images.length === 0 ? (
                 <p className="status-text">No photos yet. Be the first to upload!</p>
+            ) : filteredImages.length === 0 ? (
+                /* NEW: Edge-case fallback handling when search yields 0 hits */
+                <p className="status-text">No memories found for "{searchQuery}"</p>
             ) : (
                 <div className="image-grid">
-                    {sortedImages.map((img) => (
+                    {/* Maps over filteredImages instead of sortedImages */}
+                    {filteredImages.map((img) => (
                         <ImageCard
                             key={img.id}
                             img={img}
@@ -195,26 +219,24 @@ function Gallery() {
                 </div>
             )}
 
-            
-
             <AdminModal
                 {...modalConfig}
                 onClose={() => setModalConfig(closeParams)}
                 onConfirm={handleModalConfirm}
             />
+
             <button 
-    className="glass-fab" 
-    onClick={() => navigate('/upload')}
-    title="Upload Memories"
->
-    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="12" y1="5" x2="12" y2="19"></line>
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-    </svg>
-</button>
+                className="glass-fab" 
+                onClick={() => navigate('/upload')}
+                title="Upload Memories"
+            >
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
         </div>
     );
-    
 }
 
 export default Gallery;
