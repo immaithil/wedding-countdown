@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/upload.css";
@@ -8,10 +8,13 @@ function Upload() {
     const [uploaderName, setUploaderName] = useState("");
     const [status, setStatus] = useState("");
     const [isUploading, setIsUploading] = useState(false);
-    const [uploadProgress, setUploadProgress] = useState(0); // NEW: Progress State
+    const [uploadProgress, setUploadProgress] = useState(0);
 
+    // Create a reference to the hidden camera input
+    const cameraInputRef = useRef(null);
     const navigate = useNavigate();
 
+    // Handles picking files from the gallery
     const handleFileChange = (e) => {
         const selectedFiles = Array.from(e.target.files);
         if (selectedFiles.length > 5) {
@@ -20,8 +23,34 @@ function Upload() {
             e.target.value = null;
         } else {
             setFiles(selectedFiles);
-            setUploadProgress(0); // Reset progress on new selection
+            setUploadProgress(0);
             setStatus("");
+        }
+    };
+
+    // Handles grabbing a photo directly from the camera
+    const handleCameraCapture = (e) => {
+        const newFile = e.target.files[0];
+        if (!newFile) return;
+
+        if (files.length >= 5) {
+            setStatus("⚠️ Maximum 5 images allowed.");
+            return;
+        }
+
+        // Append the new camera photo to the existing files array
+        setFiles((prevFiles) => [...prevFiles, newFile]);
+        setUploadProgress(0);
+        setStatus("");
+        
+        // Reset the input value so the same action can be repeated
+        e.target.value = null;
+    };
+
+    // Triggers the hidden camera input click event
+    const triggerCamera = () => {
+        if (cameraInputRef.current) {
+            cameraInputRef.current.click();
         }
     };
 
@@ -33,7 +62,7 @@ function Upload() {
 
         setStatus(`⏳ Sharing ${files.length} memories...`);
         setIsUploading(true);
-        setUploadProgress(10); // Start at 10% to show activity
+        setUploadProgress(10);
 
         let completed = 0;
 
@@ -47,7 +76,6 @@ function Upload() {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
 
-                // Update progress incrementally
                 completed++;
                 const percentage = Math.round((completed / files.length) * 100);
                 setUploadProgress(percentage);
@@ -72,8 +100,6 @@ function Upload() {
 
     return (
         <div className="upload-container">
-            {/* ... keep your existing Back and Home buttons ... */}
-
             <div className="upload-glass-card">
                 <h2 className="cursive-title">✨ Share Memories</h2>
                 
@@ -89,6 +115,7 @@ function Upload() {
                 )}
 
                 <div className="input-group">
+                    {/* Gallery Input */}
                     <input
                         type="file"
                         accept="image/*"
@@ -98,6 +125,38 @@ function Upload() {
                         disabled={isUploading}
                     />
                 </div>
+
+                {/* HIDDEN CAMERA INPUT */}
+                <input
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    ref={cameraInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleCameraCapture}
+                />
+
+                {/* DEDICATED CAMERA BUTTON */}
+                <button
+                    type="button"
+                    className="glass-submit-btn camera-btn"
+                    onClick={triggerCamera}
+                    disabled={isUploading || files.length >= 5}
+                    style={{ 
+                        marginBottom: "15px", 
+                        background: "rgba(255, 255, 255, 0.15)", 
+                        border: "1px solid rgba(255, 255, 255, 0.25)" 
+                    }}
+                >
+                    📸 Take a Photo
+                </button>
+
+                {/* Status indicator for selected items */}
+                {files.length > 0 && (
+                    <div style={{ fontSize: "0.9rem", color: "#fff", marginBottom: "15px" }}>
+                        Selected: {files.length} photo(s)
+                    </div>
+                )}
 
                 <input
                     type="text"
