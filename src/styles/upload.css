@@ -12,6 +12,54 @@
   box-sizing: border-box;
   position: relative; /* REQUIRED for the back button positioning */
 }
+/* Container to handle alignment */
+.camera-btn-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Shorter, compact camera button layout */
+.glass-camera-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    width: auto; /* Overrides full-width stretch */
+    min-width: 160px; /* Prevents text from crowding */
+    max-width: 220px;
+    
+    /* Replicating your glassmorphism look */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px; /* Tweak to match your card's border radius */
+    color: #ffffff;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hover & Active states */
+.glass-camera-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+.glass-camera-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Disabled state when upload limit is hit or uploading */
+.glass-camera-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.05);
+}
+
 
 /* --- LIGHT FROSTED GLASS CARD --- */
 .upload-glass-card {
